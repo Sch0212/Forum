@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Post - Forum</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <h1>Créer un nouveau post</h1>
+    
+    <form action="/create-post" method="POST">
+        <div>
+            <label for="title">Titre du post :</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="content">Contenu :</label>
+            <textarea id="content" name="content" rows="5" required></textarea>
+        </div>
+        <button type="submit">Publier</button>
+    </form>
+    
+    <p><a href="/">Retour à l'accueil</a></p>
+</body>
+</html>

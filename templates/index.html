@@ -7,7 +7,44 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <h1>Bienvenue sur le Forum ! 🚀</h1>
-    <p>Le serveur Go fonctionne parfaitement.</p>
+    <!-- Le point '.' représente les données qu'on va envoyer depuis Go -->
+    {{if .Username}}
+        <h1>Bonjour, {{.Username}} ! 🚀</h1>
+        <p>Tu es bien connecté à ton compte.</p>
+        
+        <!-- Lien pour créer un post (visible uniquement si connecté) -->
+        <p><a href="/create-post">📝 Créer un nouveau post</a></p>
+        
+        <!-- Bouton pour se déconnecter -->
+        <form action="/logout" method="POST">
+            <button type="submit">Se déconnecter</button>
+        </form>
+    {{else}}
+        <h1>Bienvenue sur le Forum ! 🚀</h1>
+        <p>Tu es actuellement déconnecté.</p>
+        <p>
+            <a href="/login">Se connecter</a> | 
+            <a href="/register">Créer un compte</a>
+        </p>
+    {{end}}
+
+    <hr>
+
+    <h2>Dernières discussions</h2>
+    
+    <!-- On boucle sur la liste des posts envoyée par Go -->
+    {{range .Posts}}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
+            <!-- Le titre est maintenant un lien cliquable -->
+            <h3 style="margin-top: 0;">
+                <a href="/post?id={{.ID}}" style="text-decoration: none; color: #007BFF;">{{.Title}}</a>
+            </h3>
+            <p>{{.Content}}</p>
+            <small><i>Publié par <strong>{{.Author}}</strong></i></small>
+        </div>
+    {{else}}
+        <p>Aucun post pour le moment. Soyez le premier !</p>
+    {{end}}
+
 </body>
 </html>
