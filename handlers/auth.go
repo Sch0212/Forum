@@ -125,3 +125,27 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		cookie, err := r.Cookie("session_token")
+		if err == nil {
+			// On supprime la session de la base de données
+			database.DB.Exec("DELETE FROM sessions WHERE uuid = ?", cookie.Value)
+		}
+
+		// On écrase le cookie dans le navigateur en lui donnant une durée de vie négative
+		http.SetCookie(w, &http.Cookie{
+			Name:     "session_token",
+			Value:    "",
+			MaxAge:   -1,
+			HttpOnly: true,
+			Path:     "/",
+		})
+
+		// On redirige vers l'accueil
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	
+	http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+}
