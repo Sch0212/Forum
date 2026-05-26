@@ -3,24 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un Post - Forum</title>
+    <title>Créer un Post - Arena Sport</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <h1>Créer un nouveau post</h1>
-    
-    <form action="/create-post" method="POST">
-        <div>
-            <label for="title">Titre du post :</label>
-            <input type="text" id="title" name="title" required>
+    <nav class="navbar">
+        <a href="/" class="logo">ARENA<span>SPORT</span></a>
+        <a href="/" class="back-link">⬅ Retour à l'arène</a>
+    </nav>
+
+    <main class="container">
+        <div class="form-card fade-in">
+            <h1>Créer un nouveau post</h1>
+            <p style="color: #a1a1aa; margin-bottom: 2rem;">Partage ton programme, tes perfs ou demande des conseils.</p>
+            
+            <form action="/create-post" method="POST">
+                <div class="input-group">
+                    <label for="title">Titre du post :</label>
+                    <input type="text" id="title" name="title" placeholder="Ex: Mon PR au développé couché ou Semi-marathon" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="content">Contenu :</label>
+                    <textarea id="content" name="content" rows="6" placeholder="Détaille ton message ici..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">Publier</button>
+            </form>
         </div>
-        <div>
-            <label for="content">Contenu :</label>
-            <textarea id="content" name="content" rows="5" required></textarea>
-        </div>
-        <button type="submit">Publier</button>
-    </form>
-    
-    <p><a href="/">Retour à l'accueil</a></p>
+    </main>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>

@@ -21,15 +21,11 @@ func main() {
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/register", handlers.RegisterHandler)
 	http.HandleFunc("/login", handlers.LoginHandler)
-	http.HandleFunc("/logout", handlers.LogoutHandler)
-	http.HandleFunc("/create-post", handlers.CreatePostHandler)
-	http.HandleFunc("/post", handlers.ViewPostHandler)       // Afficher la page du post
-	http.HandleFunc("/add-comment", handlers.AddCommentHandler)
 
 	// 3. Lancer le serveur sur le port 8080
 	port := ":8080"
 	fmt.Println("🌐 Serveur démarré sur http://localhost" + port)
-	
+
 	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatal("Erreur lors du démarrage du serveur : ", err)

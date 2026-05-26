@@ -3,49 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Post.Title}} - Forum</title>
+    <title>{{.Post.Title}} - Arena Sport</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <p><a href="/">⬅ Retour à l'accueil</a></p>
+    <nav class="navbar">
+        <a href="/" class="logo">ARENA<span>SPORT</span></a>
+        <a href="/" class="back-link">⬅ Retour à l'arène</a>
+    </nav>
 
-    <!-- Affichage du Post principal -->
-    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-        <h1 style="margin-top: 0;">{{.Post.Title}}</h1>
-        <p>{{.Post.Content}}</p>
-        <small><i>Posté par <strong>{{.Post.Author}}</strong></i></small>
-    </div>
+    <main class="container">
+        <div class="main-post-card fade-in">
+            <h1>{{.Post.Title}}</h1>
+            <p class="post-content">{{.Post.Content}}</p>
+            <div class="post-meta">
+                <span>Posté par <strong>{{.Post.Author}}</strong></span>
+            </div>
+        </div>
 
-    <hr>
+        <h2 class="section-title fade-in">Commentaires</h2>
 
-    <!-- Zone des commentaires -->
-    <h2>Commentaires</h2>
+        {{if .Username}}
+            <div class="comment-form-card fade-in">
+                <form action="/add-comment" method="POST">
+                    <input type="hidden" name="post_id" value="{{.Post.ID}}">
+                    <div class="input-group">
+                        <textarea name="content" rows="3" placeholder="Échange avec la communauté..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Répondre</button>
+                </form>
+            </div>
+        {{else}}
+            <div class="fade-in" style="margin-bottom: 2rem;">
+                <p><i>Vous devez <a href="/login" style="color:#ff5500;">vous connecter</a> pour participer à l'entraînement.</i></p>
+            </div>
+        {{end}}
 
-    {{if .Username}}
-        <!-- Formulaire pour ajouter un commentaire (visible uniquement si connecté) -->
-        <div style="margin-bottom: 20px;">
-            <form action="/add-comment" method="POST">
-                <!-- Champ caché pour envoyer l'ID du post avec le commentaire -->
-                <input type="hidden" name="post_id" value="{{.Post.ID}}">
-                <div>
-                    <textarea name="content" rows="3" style="width: 100%;" placeholder="Écrire un commentaire..." required></textarea>
+        <div class="comments-list">
+            {{range .Comments}}
+                <div class="comment-card fade-in">
+                    <p>{{.Content}}</p>
+                    <small>Par <strong>{{.Author}}</strong></small>
                 </div>
-                <button type="submit" style="margin-top: 10px;">Répondre</button>
-            </form>
+            {{else}}
+                <p class="fade-in" style="color: #a1a1aa;">Pas encore de réponses. Lance la discussion !</p>
+            {{end}}
         </div>
-    {{else}}
-        <p><i>Vous devez <a href="/login">vous connecter</a> pour répondre.</i></p>
-    {{end}}
-
-    <!-- Liste des commentaires -->
-    {{range .Comments}}
-        <div style="border-left: 4px solid #007BFF; padding-left: 10px; margin-bottom: 15px;">
-            <p style="margin: 0 0 5px 0;">{{.Content}}</p>
-            <small style="color: #666;">Par <strong>{{.Author}}</strong></small>
-        </div>
-    {{else}}
-        <p>Il n'y a pas encore de commentaires. Soyez le premier !</p>
-    {{end}}
-
+    </main>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>

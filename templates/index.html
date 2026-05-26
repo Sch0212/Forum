@@ -3,48 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Super Forum</title>
+    <title>Forum Sport & Fitness</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <!-- Le point '.' représente les données qu'on va envoyer depuis Go -->
-    {{if .Username}}
-        <h1>Bonjour, {{.Username}} ! 🚀</h1>
-        <p>Tu es bien connecté à ton compte.</p>
-        
-        <!-- Lien pour créer un post (visible uniquement si connecté) -->
-        <p><a href="/create-post">📝 Créer un nouveau post</a></p>
-        
-        <!-- Bouton pour se déconnecter -->
-        <form action="/logout" method="POST">
-            <button type="submit">Se déconnecter</button>
+    <nav class="navbar">
+        <a href="/" class="logo">ARENA<span>SPORT</span></a>
+        {{if .Username}}
+        <form action="/logout" method="POST" class="inline-form">
+            <button type="submit" class="btn-logout">Se déconnecter</button>
         </form>
-    {{else}}
-        <h1>Bienvenue sur le Forum ! 🚀</h1>
-        <p>Tu es actuellement déconnecté.</p>
-        <p>
-            <a href="/login">Se connecter</a> | 
-            <a href="/register">Créer un compte</a>
-        </p>
-    {{end}}
+        {{end}}
+    </nav>
 
-    <hr>
-
-    <h2>Dernières discussions</h2>
-    
-    <!-- On boucle sur la liste des posts envoyée par Go -->
-    {{range .Posts}}
-        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-            <!-- Le titre est maintenant un lien cliquable -->
-            <h3 style="margin-top: 0;">
-                <a href="/post?id={{.ID}}" style="text-decoration: none; color: #007BFF;">{{.Title}}</a>
-            </h3>
-            <p>{{.Content}}</p>
-            <small><i>Publié par <strong>{{.Author}}</strong></i></small>
+    <main class="container">
+        <div class="hero-card fade-in">
+            {{if .Username}}
+                <h1>Prêt à transpirer, <span>{{.Username}}</span> ? 🚀</h1>
+                <p>La communauté attend ton prochain exploit.</p>
+                <a href="/create-post" class="btn-primary mt-1">📝 Créer un nouveau post</a>
+            {{else}}
+                <h1>Bienvenue dans l'arène ! 🚀</h1>
+                <p>Musculation, Course, MMA... Rejoins la communauté des athlètes.</p>
+                <div class="action-links mt-1">
+                    <a href="/login" class="btn-primary">Se connecter</a>
+                    <a href="/register" class="btn-secondary">S'inscrire</a>
+                </div>
+            {{end}}
         </div>
-    {{else}}
-        <p>Aucun post pour le moment. Soyez le premier !</p>
-    {{end}}
 
+        <h2 class="section-title fade-in">Dernières discussions</h2>
+        
+        <div class="post-list">
+            {{range .Posts}}
+                <div class="post-card fade-in">
+                    <h3><a href="/post?id={{.ID}}">{{.Title}}</a></h3>
+                    <p class="post-preview">{{.Content}}</p>
+                    <div class="post-meta">
+                        <span>👤 {{.Author}}</span>
+                    </div>
+                </div>
+            {{else}}
+                <div class="post-card fade-in">
+                    <p>Aucun post pour le moment. La salle est vide, sois le premier !</p>
+                </div>
+            {{end}}
+        </div>
+    </main>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>
