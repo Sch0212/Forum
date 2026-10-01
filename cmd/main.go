@@ -21,6 +21,10 @@ func main() {
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/register", handlers.RegisterHandler)
 	http.HandleFunc("/login", handlers.LoginHandler)
+	http.HandleFunc("/logout", handlers.LogoutHandler)
+	http.HandleFunc("/post", handlers.ViewPostHandler)
+	http.HandleFunc("/create_post", handlers.CreatePostHandler)
+	http.HandleFunc("/comment", handlers.AddCommentHandler)
 
 	// 3. Lancer le serveur sur le port 8080
 	port := ":8080"
